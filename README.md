@@ -1,7 +1,7 @@
 # Gestion_procesos_eventos
 Octavo semestre:Proyecto terminal  I & II para titulación de Ingeniería Desarrollo de Software:Institución: Dirección de educación especial e inclusiva , con tecnologias propuestas Full stack: Node.js-Express, next.js tailwind css, typescript, MVC, MySQL
 
-# Actividades del proyecto
+### Actividades del proyecto
 * Estudio benchamarking
 * Propuesta del sistema
 * Levantamiento de requerimientos funcionales y no funcionales
@@ -15,7 +15,7 @@ Octavo semestre:Proyecto terminal  I & II para titulación de Ingeniería Desarr
 * Metricas de prueba
 * Documentación completa
 * Manual de usuario
-# Mecanismos de seguridad para el sistema
+### Mecanismos de seguridad para el sistema
 * Contraseñas seguras
 * Encriptación de datos
 * Captcha
