@@ -3,8 +3,8 @@ Octavo semestre:Proyecto terminal  I & II para titulación de Ingeniería Desarr
 ### Metodología ágil 
 * Kanban
 ### Herramienta para gestor de proyecto de software y diseño
-*trello
-*figma
+* trello
+* figma
 ### Actividades del proyecto
 * Estudio benchamarking
 * Propuesta del sistema
