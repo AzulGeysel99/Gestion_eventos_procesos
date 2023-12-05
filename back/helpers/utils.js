@@ -1,17 +1,17 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { jwtExpiry } from './constants.js';
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { jwtExpiry } = require('./constants.js');
 
 /**
- * @descripción
- * el siguiente método es responsable de enviar una respuesta al cliente
- * @param {object} res el objeto de respuesta
- * @param {número} statusCode el código de estado http
- * @param {string} mensaje el mensaje que se enviará al cliente
- * @param {array} da como resultado el objeto resultante cuando la solicitud es exitosa
- * @param {object} error el objeto de error que se enviará al cliente, cuando exista
+ * @description
+ * El siguiente método es responsable de enviar una respuesta al cliente.
+ * @param {object} res El objeto de respuesta.
+ * @param {number} statusCode El código de estado HTTP.
+ * @param {string} message El mensaje que se enviará al cliente.
+ * @param {array} result El objeto resultante cuando la solicitud es exitosa.
+ * @param {object} error El objeto de error que se enviará al cliente, cuando exista.
  */
-export const sendResponse = (res, statusCode, message, result = [], error = {}) => {
+const sendResponse = (res, statusCode, message, result = [], error = {}) => {
   res.status(statusCode).json({
     statusCode,
     message,
@@ -20,17 +20,16 @@ export const sendResponse = (res, statusCode, message, result = [], error = {}) 
   });
 };
 
-export const validate = {
- /**
-   * @descripción
-   * toma la contraseña en texto plano del usuario
-   * y comprueba si la contraseña contiene:
-   * 1. al menos 5 caracteres
-   * 2. al menos 1 letra mayúscula
-   * 3. al menos 1 letra minúscula
-   * 4. al menos 1 número o carácter especial
-   * @param {string} str la contraseña en texto plano del usuario
-   * @returns {boolean} verdadero o falso según la verificación
+const validate = {
+  /**
+   * @description
+   * Toma la contraseña en texto plano del usuario y comprueba si la contraseña contiene:
+   * 1. Al menos 5 caracteres
+   * 2. Al menos 1 letra mayúscula
+   * 3. Al menos 1 letra minúscula
+   * 4. Al menos 1 número o carácter especial
+   * @param {string} str La contraseña en texto plano del usuario.
+   * @returns {boolean} Verdadero o falso según la verificación.
    */
   password: (str) => {
     const regex = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
@@ -40,15 +39,15 @@ export const validate = {
 };
 
 /**
- * @descripción
- * el siguiente método recibe un targetObject cuyas claves se verificarán
- * con la correspondiente matriz de campos obligatorios
- * @param {object} objeto targetObject cuyas claves se van a comprobar
- * @param {array} requireFieldsArray conjunto de campos que se verificarán en targetObject
- * @param {boolean} checkForAll el valor booleano para indicar si todos los campos de requireFieldsArr deben estar presentes en targetObj
- * @devuelve un booleano confirmando la coincidencia
+ * @description
+ * El siguiente método recibe un targetObject cuyas claves se verificarán
+ * con la correspondiente matriz de campos obligatorios.
+ * @param {object} targetObj Objeto targetObject cuyas claves se van a comprobar.
+ * @param {array} requiredFieldsArr Conjunto de campos que se verificarán en targetObject.
+ * @param {boolean} checkForAll El valor booleano para indicar si todos los campos de requiredFieldsArr deben estar presentes en targetObj.
+ * @returns Un booleano confirmando la coincidencia.
  */
-export const isAvailable = (targetObj, requiredFieldsArr, checkForAll = true) => {
+const isAvailable = (targetObj, requiredFieldsArr, checkForAll = true) => {
   const targetKeysArr = Object.keys(targetObj);
 
   let match;
@@ -59,12 +58,12 @@ export const isAvailable = (targetObj, requiredFieldsArr, checkForAll = true) =>
 };
 
 /**
- * @descripción
- * el siguiente método recibe la contraseña en texto plano del usuario y produce un hash de la misma
- * @param {string} contraseña la contraseña en texto plano del usuario
- * @devuelve el valor hash de la contraseña
+ * @description
+ * El siguiente método recibe la contraseña en texto plano del usuario y produce un hash de la misma.
+ * @param {string} password La contraseña en texto plano del usuario.
+ * @returns El valor hash de la contraseña.
  */
-export const getHashPassword = async (password) => {
+const getHashPassword = async (password) => {
   const salt = await bcrypt.genSalt();
 
   const hashPassword = await bcrypt.hash(password, salt);
@@ -73,27 +72,26 @@ export const getHashPassword = async (password) => {
 };
 
 /**
- * @descripción
- * el siguiente método recibe la contraseña del usuario desde la solicitud de inicio de sesión y la contraseña guardada en la base de datos
- * y luego verifica ambos
- * @param {string} PlainTextPassword la contraseña ingresada por el usuario durante el inicio de sesión
- * @param {string} hashPassword la contraseña extraída de la base de datos
- * @returns un booleano confirmando la verificación de contraseña
+ * @description
+ * El siguiente método recibe la contraseña del usuario desde la solicitud de inicio de sesión y la contraseña guardada en la base de datos,
+ * y luego verifica ambos.
+ * @param {string} plainTextPassword La contraseña ingresada por el usuario durante el inicio de sesión.
+ * @param {string} hashPassword La contraseña extraída de la base de datos.
+ * @returns Un booleano confirmando la verificación de contraseña.
  */
-
-export const verifyUserPassword = async (plainTextPassword, hashPassword) => {
+const verifyUserPassword = async (plainTextPassword, hashPassword) => {
   const validation = await bcrypt.compare(plainTextPassword, hashPassword);
 
   return validation;
 };
 
 /**
- * @descripción
- * el siguiente método crea un token jwt utilizando una carga útil de identificación de usuario y nombre de usuario
- * @param {object} jwtPayload la carga útil de jwt que consta de ID de usuario y nombre de usuario
- * @devuelve el token jwt
+ * @description
+ * El siguiente método crea un token JWT utilizando una carga útil de identificación de usuario y nombre de usuario.
+ * @param {object} jwtPayload La carga útil de JWT que consta de ID de usuario y nombre de usuario.
+ * @returns El token JWT.
  */
-export const getJwtToken = (jwtPayload) => jwt.sign(
+const getJwtToken = (jwtPayload) => jwt.sign(
   {
     userId: jwtPayload.userId,
     username: jwtPayload.username
@@ -103,22 +101,33 @@ export const getJwtToken = (jwtPayload) => jwt.sign(
 );
 
 /**
- * @descripción
- * el siguiente método crea una cookie y la adjunta al objeto de respuesta
- * @param {object} res la respuesta que se enviará al cliente
- * @param {string} key la clave de la cookie que se creará
- * @param {string} valor el valor de la cookie que se creará
+ * @description
+ * El siguiente método crea una cookie y la adjunta al objeto de respuesta.
+ * @param {object} res La respuesta que se enviará al cliente.
+ * @param {string} key La clave de la cookie que se creará.
+ * @param {string} value El valor de la cookie que se creará.
  */
-export const saveCookie = (res, key, value) => res.cookie(key, value, { httpOnly: true, maxAge: jwtExpiry * 1000 });
+const saveCookie = (res, key, value) => res.cookie(key, value, { httpOnly: true, maxAge: jwtExpiry * 1000 });
 
 /**
- * @descripción
- * el siguiente método recibe un token jwt y luego verifica el mismo
- * @param {string} token el token jwt que se va a verificar
- * @devuelve el token decodificado, si la verificación es exitosa
+ * @description
+ * El siguiente método recibe un token JWT y luego verifica el mismo.
+ * @param {string} token El token JWT que se va a verificar.
+ * @returns El token decodificado, si la verificación es exitosa.
  */
-export const verifyJwtToken = (token) => {
+const verifyJwtToken = (token) => {
   const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
   return decodedToken;
+};
+
+module.exports = {
+  sendResponse,
+  validate,
+  isAvailable,
+  getHashPassword,
+  verifyUserPassword,
+  getJwtToken,
+  saveCookie,
+  verifyJwtToken,
 };

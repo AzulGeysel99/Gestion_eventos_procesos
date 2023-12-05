@@ -1,7 +1,7 @@
-import { STATUS_CODES } from './constants.js';
-import { sendResponse } from './utils.js';
+const { STATUS_CODES } = require('./constants.js');
+const { sendResponse } = require('./utils.js');
 
-export class AppError extends Error {
+class AppError extends Error {
   constructor(message, statusCode, error) {
     super(message);
 
@@ -14,8 +14,7 @@ export class AppError extends Error {
   }
 }
 
-
-export const handleError = (error, req, res) => {
+const handleError = (error, req, res) => {
   const statusCode = error.statusCode || STATUS_CODES.INTERNAL_SERVER_ERROR;
   delete error?.statusCode;
 
@@ -27,3 +26,5 @@ export const handleError = (error, req, res) => {
     error
   );
 };
+
+module.exports = { AppError, handleError };

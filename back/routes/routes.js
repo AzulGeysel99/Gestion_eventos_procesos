@@ -1,17 +1,11 @@
-import { AuthController } from '../controllers/testuser.js';
-import { AuthMiddlewares } from '../middlewares/testusers.js';
+const { AuthController } = require('../controllers/testuser.js');
+const { AuthMiddlewares } = require('../middlewares/test_auth.js');
 
-// routes responsible for auth management
-export const authRoutes = (app) => {
-  app
-    .route('/signup')
-    .post(AuthMiddlewares.isAuthenticated, AuthController.signUpUser);
+// Routes responsible for auth management
+exports.authRoutes = (app) => {
+  app.route('/signup').post(AuthMiddlewares.isAuthenticated, AuthController.signUpUser);
 
-  app
-    .route('/login')
-    .post(AuthMiddlewares.isAuthenticated, AuthController.logInUser);
+  app.route('/login').post(AuthMiddlewares.isAuthenticated, AuthController.logInUser);
 
-  app
-    .route('/logout')
-    .post(AuthController.logOutUser);
+  app.route('/logout').post(AuthController.logOutUser);
 };

@@ -1,9 +1,10 @@
-import express from 'express';
-import cookieParser from 'cookie-parser';
-import {} from './config/db.js';
-import { STATUS_CODES } from './helpers/constants.js';
-import { authRoutes } from './routes/routes.js';
-import { AppError, handleError } from './helpers/error.js';
+const express = require('express');
+const cookieParser = require('cookie-parser');
+require('./config/db.js');
+const { STATUS_CODES } = require('./helpers/constants.js');
+const { authRoutes } = require('./routes/routes.js');
+const { AppError, handleError } = require('./helpers/error.js');
+
 
 const app = express();
 
@@ -13,15 +14,15 @@ app.use(cookieParser());
 
 // routes
 authRoutes(app);
-userRoutes(app);
+userRoutes(app); // Make sure you have imported and defined userRoutes
 
-app.all('*', (req, _, next) => {
+app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.method} ${req.originalUrl} on this server!`, STATUS_CODES.NOT_FOUND));
 });
 
 // centralized error handling
-app.use((err, req, res, _) => {
-  handleError(err, req, res, _);
+app.use((err, req, res, next) => {
+  handleError(err, req, res, next);
 });
 
 // running the server

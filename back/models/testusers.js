@@ -1,14 +1,12 @@
-import { Database } from '../config/db.js';
+const { Database } = require('../config/db.js');
 
-export class AuthModel {
-  
-
+class AuthModel {
   /**
    * @description
-   * the following method fetches a user corresponding to a particular user attribute
-   * @param {string} attribute the attribute for which the user is to be fetched
-   * @param {any} value the value of the attribute
-   * @returns the user, if exists
+   * The following method fetches a user corresponding to a particular user attribute.
+   * @param {string} attribute The attribute for which the user is to be fetched.
+   * @param {any} value The value of the attribute.
+   * @returns The user, if it exists.
    */
   static async findUserByAttribute(attribute, value) {
     const query = `SELECT * FROM users WHERE email = ? AND password = ?`;
@@ -19,3 +17,5 @@ export class AuthModel {
     return result[0];
   }
 }
+
+module.exports = { AuthModel };
