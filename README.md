@@ -1,5 +1,5 @@
 # Gestion_procesos_eventos
-Octavo semestre:Proyecto terminal  I & II para titulación de Ingeniería Desarrollo de Software:Institución: Dirección de educación especial e inclusiva , con tecnologias propuestas Full stack: Node.js-Express, next.js tailwind css, typescript, MVC, MySQL
+Octavo semestre:Proyecto terminal  I & II para titulación de Ingeniería Desarrollo de Software:Institución: Dirección de educación especial e inclusiva , con tecnologias propuestas Full stack: Node.js-Express, next.js Bootstrap, javascript , MVC
 ### Metodología ágil 
 * Kanban
 ### Herramienta para gestor de proyecto de software y diseño
